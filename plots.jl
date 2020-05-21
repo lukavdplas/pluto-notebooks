@@ -12,24 +12,26 @@ md"""
 
 Pluto is an excellent enviroment to visualise your data. This notebook shows a few examples of using plots in Pluto using the `Plots` package.
 
-I tried to write this notebook so you can understand it even if you have never used `Plots`. However, it is not a complete tutorial for the package. Look at the package [documentation](https://docs.juliaplots.org/latest/) for a full tutorial.
+I wrote this notebook so you can understand it even if you have never used `Plots`. However, it is not intend as a complete tutorial for the package. If you want to start making your own plots, I recommend looking at the package [documentation](https://docs.juliaplots.org/latest/) for a full tutorial as well.
+
+Let's start by importing the `Plots` package. You can just put a cell like this anywhere in your notebook.
 """
 
 # ╔═╡ 5ae65950-9ad9-11ea-2e14-35119d369acd
 md"""
 ## The basics
-We can start by making an array of X and Y values
+Now we can get started. We can begin by making some X and Y values. I typed out some Y values so you can alter them and see the effect. 
 """
 
 # ╔═╡ aaa805d4-9ad8-11ea-21c2-3b20580fea0e
 X = 1:10
 
 # ╔═╡ c02bc44a-9ad8-11ea-117d-3997e1f3cab0
-Y1 = rand(10)
+Y1 = [0.15, 0.25, 0.8, 0.75, 0.5, 0.3, 0.35, 0.15, 0.25, 0.35]
 
 # ╔═╡ a405ae4c-9ad9-11ea-0008-f763e098846d
 md"""
-Let's plot them! The syntax of of `Plots` is very simple.
+Great, let's plot them! The basic syntax of of `Plots` is very simple.
 """
 
 # ╔═╡ 12a8c222-9ad9-11ea-2544-355bd080367f
@@ -59,7 +61,7 @@ end
 md"""
 ## More options
 
-We can also plot multiple series or different plot types without much difficulty.
+We can easily plot multiple series.
 """
 
 # ╔═╡ bd30bdf4-9add-11ea-26d4-75ac3f0b8610
@@ -71,8 +73,28 @@ begin
 	plot!(X, Y2, label = "more data")
 end
 
+# ╔═╡ c9a64e98-9b67-11ea-1d6a-3b1f7548cb8d
+md"""
+Different plot types have their own functions.
+"""
+
 # ╔═╡ 13428812-9ade-11ea-3865-1d293993203d
 scatter(Y1, Y2, legend = false)
+
+# ╔═╡ d76fd0f6-9b67-11ea-0a73-e9ddb60ca291
+md"""
+You can also plot a function instead of an output array!
+"""
+
+# ╔═╡ 69fa7744-9b67-11ea-26df-3b4446dfb3ea
+begin
+	function myfunction(x)
+		return sin(x/2)
+	end
+	
+	plot(X, sin, label = "sine")
+	plot!(X, myfunction, label = "my function")
+end
 
 # ╔═╡ af31a428-9adf-11ea-280a-45e2b891c4f9
 md"""
@@ -83,6 +105,11 @@ Plots are also just a type of variable, so you can give them a name.
 
 # ╔═╡ 80e5ac54-9adf-11ea-0ccf-8fba5fe52049
 plot2 = scatter(Y1, Y2, legend = false)
+
+# ╔═╡ 030c1d10-9b69-11ea-11b7-ff04c60892b9
+md"""
+This way, you can show them again
+"""
 
 # ╔═╡ 22992cec-9adb-11ea-078e-c7c21489c053
 md"""
@@ -96,6 +123,9 @@ Y3 = rand(10)
 
 # ╔═╡ 5ed7c444-9adf-11ea-2925-8573f018e820
 plot1 = plot(X, Y3, legend = false)
+
+# ╔═╡ d7bdab72-9b65-11ea-18c0-5353a214749d
+plot1
 
 # ╔═╡ 632cb26c-9ade-11ea-1bc7-39b8207190e2
 Y4 = rand(10)
@@ -154,7 +184,8 @@ So what if you do want to add things to a plot one at a time, instead of using a
 
 # ╔═╡ 8819edf0-9ae4-11ea-15f4-f17e9e9db8ea
 function apples_plot()
-	plot(X, Y3, label = "apples")
+	myplot = plot(X, Y3, label = "apples")
+	return myplot
 end
 
 # ╔═╡ 9e4d1462-9ae4-11ea-3c0f-774d68a671c3
@@ -186,10 +217,15 @@ Try changing the function for the base plot and the alterations in the bottom ce
 # ╟─eb218bea-9adc-11ea-2f3a-298c41caf8a1
 # ╠═bd30bdf4-9add-11ea-26d4-75ac3f0b8610
 # ╠═dc50d480-9add-11ea-2821-018a98fab262
+# ╟─c9a64e98-9b67-11ea-1d6a-3b1f7548cb8d
 # ╠═13428812-9ade-11ea-3865-1d293993203d
+# ╟─d76fd0f6-9b67-11ea-0a73-e9ddb60ca291
+# ╠═69fa7744-9b67-11ea-26df-3b4446dfb3ea
 # ╟─af31a428-9adf-11ea-280a-45e2b891c4f9
 # ╠═5ed7c444-9adf-11ea-2925-8573f018e820
 # ╠═80e5ac54-9adf-11ea-0ccf-8fba5fe52049
+# ╟─030c1d10-9b69-11ea-11b7-ff04c60892b9
+# ╠═d7bdab72-9b65-11ea-18c0-5353a214749d
 # ╟─22992cec-9adb-11ea-078e-c7c21489c053
 # ╠═5d723220-9ade-11ea-37db-c110dda60a15
 # ╠═632cb26c-9ade-11ea-1bc7-39b8207190e2
@@ -202,7 +238,7 @@ Try changing the function for the base plot and the alterations in the bottom ce
 # ╟─46388876-9ae2-11ea-2c5f-073698e45d44
 # ╠═2598a29a-9ae2-11ea-02cc-21f3fa5a9472
 # ╟─a9cdba00-9ae2-11ea-3bf9-41d07e7a785f
-# ╠═f22b6fda-9ae3-11ea-3ff2-ebcf1374f595
+# ╟─f22b6fda-9ae3-11ea-3ff2-ebcf1374f595
 # ╠═8819edf0-9ae4-11ea-15f4-f17e9e9db8ea
 # ╠═9e4d1462-9ae4-11ea-3c0f-774d68a671c3
 # ╠═a7906786-9ae4-11ea-0175-4f860c05a8a2
