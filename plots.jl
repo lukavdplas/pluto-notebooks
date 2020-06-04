@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.9.0
+# v0.9.2
 
 using Markdown
 
@@ -24,10 +24,10 @@ Now we can get started. We can begin by making some X and Y values. I typed out 
 """
 
 # ╔═╡ aaa805d4-9ad8-11ea-21c2-3b20580fea0e
-X = 1:10
+years = 2001:2010
 
 # ╔═╡ c02bc44a-9ad8-11ea-117d-3997e1f3cab0
-Y1 = [0.15, 0.25, 0.8, 0.75, 0.5, 0.3, 0.35, 0.15, 0.25, 0.35]
+apples = [15, 25, 80, 75, 50, 30, 35, 15, 25, 35]
 
 # ╔═╡ a405ae4c-9ad9-11ea-0008-f763e098846d
 md"""
@@ -35,7 +35,7 @@ Great, let's plot them! The basic syntax of of `Plots` is very simple.
 """
 
 # ╔═╡ 12a8c222-9ad9-11ea-2544-355bd080367f
-plot(X, Y1)
+plot(years, apples)
 
 # ╔═╡ 19660da0-9ada-11ea-1942-a9d4ddd7753b
 md"""
@@ -43,7 +43,7 @@ You can change the properties of the plot by giving different arguments to the f
 """
 
 # ╔═╡ 5410faba-9ada-11ea-2fc5-35f0bdd40d96
-plot(X, Y1, legend = false, title = "A plot with a title")
+plot(years, apples, legend = false, title = "Number of apples per year")
 
 # ╔═╡ 90c47cae-9ada-11ea-10da-91f4dcf0f2d6
 md"""
@@ -52,9 +52,9 @@ Alternatively, you can use `plot!()`. This function takes the same arguments, bu
 
 # ╔═╡ b2727d2e-9ada-11ea-23d3-bddab9ec8de1
 begin
-	plot(X, Y1)
+	plot(years, apples)
 	plot!(legend = false)
-	plot!(title = "A plot with a title")
+	plot!(title =  "Number of apples per year")
 end
 
 # ╔═╡ eb218bea-9adc-11ea-2f3a-298c41caf8a1
@@ -65,12 +65,12 @@ We can easily plot multiple series.
 """
 
 # ╔═╡ bd30bdf4-9add-11ea-26d4-75ac3f0b8610
-Y2 = rand(10)
+oranges = rand(1:100, 10)
 
 # ╔═╡ dc50d480-9add-11ea-2821-018a98fab262
 begin
-	plot(X, Y1, label = "some data")
-	plot!(X, Y2, label = "more data")
+	plot(years, apples, label = "apples")
+	plot!(years, oranges, label = "oranges")
 end
 
 # ╔═╡ c9a64e98-9b67-11ea-1d6a-3b1f7548cb8d
@@ -79,7 +79,7 @@ Different plot types have their own functions.
 """
 
 # ╔═╡ 13428812-9ade-11ea-3865-1d293993203d
-scatter(Y1, Y2, legend = false)
+scatter(apples, oranges, legend = false)
 
 # ╔═╡ d76fd0f6-9b67-11ea-0a73-e9ddb60ca291
 md"""
@@ -92,8 +92,8 @@ begin
 		return sin(x/2)
 	end
 	
-	plot(X, sin, label = "sine")
-	plot!(X, myfunction, label = "my function")
+	plot(years, sin, label = "sine")
+	plot!(years, myfunction, label = "my function")
 end
 
 # ╔═╡ af31a428-9adf-11ea-280a-45e2b891c4f9
@@ -103,13 +103,21 @@ md"""
 Plots are also just a type of variable, so you can give them a name.
 """
 
-# ╔═╡ 80e5ac54-9adf-11ea-0ccf-8fba5fe52049
-plot2 = scatter(Y1, Y2, legend = false)
+# ╔═╡ 5ed7c444-9adf-11ea-2925-8573f018e820
+apples_plot = plot(years, apples, 
+	legend = false, xlabel = "year", ylabel = "apples")
+
+# ╔═╡ 932b6b3c-a64d-11ea-2aba-2bf577ce3cf8
+apples_vs_oranges = scatter(apples, oranges, 
+	legend = false, xlabel = "apples", ylabel = "oranges")
 
 # ╔═╡ 030c1d10-9b69-11ea-11b7-ff04c60892b9
 md"""
 This way, you can show them again
 """
+
+# ╔═╡ d7bdab72-9b65-11ea-18c0-5353a214749d
+apples_plot
 
 # ╔═╡ 22992cec-9adb-11ea-078e-c7c21489c053
 md"""
@@ -119,32 +127,24 @@ We can combine multiple plots in a single image using the `layout` argument. One
 """
 
 # ╔═╡ 5d723220-9ade-11ea-37db-c110dda60a15
-Y3 = rand(10)
-
-# ╔═╡ 5ed7c444-9adf-11ea-2925-8573f018e820
-plot1 = plot(X, Y3, legend = false)
-
-# ╔═╡ d7bdab72-9b65-11ea-18c0-5353a214749d
-plot1
+pears = rand(1:100, 10)
 
 # ╔═╡ 632cb26c-9ade-11ea-1bc7-39b8207190e2
-Y4 = rand(10)
+bananas = rand(1:100, 10)
 
 # ╔═╡ a01bf430-9ade-11ea-2ae4-23287ba11406
-Y = hcat(Y1, Y2, Y3, Y4)
+fruits = hcat(apples, oranges, pears, bananas)
 
 # ╔═╡ 69e045b0-9ade-11ea-0c55-05fa0da5893c
-plot(X, Y, layout = (4,1), legend = false)
+plot(years, fruits, layout = (4,1), legend = false)
 
 # ╔═╡ 054e0c4e-9adf-11ea-3deb-4daf2b6a2548
 md"""
-This works when we have a nice output matrix, but life is not always that simple!
-
-Named plots are usually the best solution. When we have created a few plots, we can put them together in a single plot.
+This works when we have a nice output matrix. For more complicated options, named plots are usually a good solution. When we have created a few plots, we can put them together in a single plot.
 """
 
 # ╔═╡ 91b4eedc-9adf-11ea-37aa-250ceec26640
-plot(plot1, plot2, layout = (2,1))
+plot(apples_plot, apples_vs_oranges, layout = (1, 2))
 
 # ╔═╡ a7abf64e-9adb-11ea-2ae4-47886125fe60
 md"""
@@ -154,25 +154,25 @@ For the most part, plotting in Pluto is not different from anywhere else. Howeve
 
 The `plot!()` function alters an existing plot. In reactive programming, you are not supposed to alter the value of a variable you defined in a different cell. I strongly recommend that you only use `plot!()` to alter plots you initialised in the same cell. 
 
-For the sake of demonstration, here is what happens if you use `plot!()` in its own cell.
+For the sake of demonstration, here is what happens if you use `plot!()` in its own cell. Let's start by making a new plot.
 """
 
 # ╔═╡ 2617a7b6-9ae2-11ea-1461-d914c7cfdb09
-myplot = plot(X, Y3, label = "apples")
+pears_plot = plot(years, pears, label = "pears")
 
 # ╔═╡ 46388876-9ae2-11ea-2c5f-073698e45d44
 md"""
-The cell below adds a new series to the plot. It shows the altered plot, while our original plot still looks intact. Okay, we can work with that, right?
+The cell below adds a new series to the plot. It shows the altered plot, while our original plot still looks intact.
 
-Try changing the code so the extra series is based on `Y1` or `Y2` instead of `Y4`.
+Maybe that's not so bad. It seems like we could use this to build a plot one step at a time. But try changing the plot below so that it plots oranges instead of bananas.
 """
 
 # ╔═╡ 2598a29a-9ae2-11ea-02cc-21f3fa5a9472
-plot!(myplot, X, Y4, label = "oranges")
+plot!(pears_plot, years, bananas, label = "bananas")
 
 # ╔═╡ a9cdba00-9ae2-11ea-3bf9-41d07e7a785f
 md"""
-Did you get three series? It's because the `plot` still has the `Y4` variable added to it. So the data from `Y4` are still in the plot, even though you now don't have any code doing that. This is not great for coding: it means that if you close your notebook, it might not look the same when you open it again.
+Did you get three series? It's because the `plot` still has the `bananas` data added to it. So the bananas are still plotted, even though you now don't have any code doing that. This is not great for coding: it means that if you close your notebook, your plots might not look the same when you open it again.
 
 Try running the cell a few times. You keep adding series! Also not great when working on a plot.
 """
@@ -183,23 +183,23 @@ So what if you do want to add things to a plot one at a time, instead of using a
 """
 
 # ╔═╡ 8819edf0-9ae4-11ea-15f4-f17e9e9db8ea
-function apples_plot()
-	myplot = plot(X, Y3, label = "apples")
+function plot_pears()
+	myplot = plot(years, pears, label = "pears")
 	return myplot
 end
 
 # ╔═╡ 9e4d1462-9ae4-11ea-3c0f-774d68a671c3
-apples_plot()
+plot_pears()
 
 # ╔═╡ a7906786-9ae4-11ea-0175-4f860c05a8a2
 begin
-	a = apples_plot()
-	plot!(X, Y4, label = "oranges")
+	plot_pears()
+	plot!(years, bananas, label = "bananas")
 end
 
 # ╔═╡ d3cbc548-9ae4-11ea-261f-7fb956839e53
 md"""
-Try changing the function for the base plot and the alterations in the bottom cell. No weird effects!
+Try changing the function for the base plot, or the addition in the bottom cell. No weird effects!
 """
 
 # ╔═╡ Cell order:
@@ -223,7 +223,7 @@ Try changing the function for the base plot and the alterations in the bottom ce
 # ╠═69fa7744-9b67-11ea-26df-3b4446dfb3ea
 # ╟─af31a428-9adf-11ea-280a-45e2b891c4f9
 # ╠═5ed7c444-9adf-11ea-2925-8573f018e820
-# ╠═80e5ac54-9adf-11ea-0ccf-8fba5fe52049
+# ╠═932b6b3c-a64d-11ea-2aba-2bf577ce3cf8
 # ╟─030c1d10-9b69-11ea-11b7-ff04c60892b9
 # ╠═d7bdab72-9b65-11ea-18c0-5353a214749d
 # ╟─22992cec-9adb-11ea-078e-c7c21489c053
