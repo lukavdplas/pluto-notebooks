@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.10.5
+# v0.11.0
 
 using Markdown
 using InteractiveUtils
@@ -34,6 +34,13 @@ md"""
 What happens if we change the notebook? Pluto autosaves, so the file is always up to date. However, Pluto doesn't notice that the underlying file is changed with the notebook. So whenever you want to refresh the file, click the button below.
 """
 
+# ╔═╡ 043c8b00-cd20-11ea-2f09-3b0d2b5268bc
+md"""
+## Fun experimentation section
+
+Now that you can easily see the file, you can easily see what happens when you work in a notebook. Here are some cells with complicated calculations. You can see that the value of `y` is dependent on `x`. Look for these cells in the file above. Then try changing their order, refresh, and see how it affects the file.
+"""
+
 # ╔═╡ 630197b6-cd1b-11ea-2b4d-b517ee6bf6ba
 @bind go html"""<button>Read file</button>"""
 
@@ -45,13 +52,6 @@ end
 
 # ╔═╡ 1fff25d0-cd1b-11ea-2c51-6595cb61bb08
 HTML("<code><pre>$(Markdown.htmlesc(text))</pre></code>")
-
-# ╔═╡ 043c8b00-cd20-11ea-2f09-3b0d2b5268bc
-md"""
-## Fun experimentation section
-
-Now that you can easily see the file, you can easily see what happens when you work in a notebook. Here are some cells with complicated calculations. You can see that the value of `y` is dependent on `x`. Look for these cells in the file above. Then try changing their order, refresh, and see how it affects the file.
-"""
 
 # ╔═╡ c8b35b72-cd1a-11ea-34d7-533e3d8f73cf
 x = 5
