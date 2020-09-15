@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.8
+# v0.11.14
 
 using Markdown
 using InteractiveUtils
@@ -15,19 +15,26 @@ You don't need to now anything natural language processing to understand this no
 Let's get started! We will import the novel _Emma_ by Jane Austen. A [txt version of the book](https://www.gutenberg.org/files/158/158-0.txt) (and many other public domain books) is available at [Project Gutenberg](www.gutenberg.org).
 """
 
+# ╔═╡ 903378ce-f795-11ea-2c9c-ddf0a83327b8
+emma_file = download("https://www.gutenberg.org/files/158/158-0.txt")
+
 # ╔═╡ 72061fea-9b71-11ea-030c-41b037d39a84
 #all text
-emma = begin
-	raw_text = open("emma.txt") do file
-		read(file, String)
-	end
+emma = let
+	raw_text = read(emma_file, String)
 	
 	#the txt file contains a lot of information about copyright and so on
 	#so we filter that out first
 	lines = split(raw_text, r"\n")
 	relevant_lines = lines[32:end - 368]
 	join(relevant_lines, "\n")
-end
+end;
+
+# ╔═╡ bd672c80-f795-11ea-18d5-4f90843409b9
+emma[1:500]
+
+# ╔═╡ cebcb1ba-f795-11ea-15cd-c1e9d3c16722
+Text(emma[1:500])
 
 # ╔═╡ 07f26706-9b75-11ea-1595-136ad1d0978b
 md"""
@@ -55,7 +62,7 @@ Why is this happening? You can look back at the array of words: it contains `"be
 
 We often separate words from punctuation for this reason. The function below will split a string on not only whitespace, but also other transitions between word character and non-word characters.
 
-(Many string functions in Julia, including `split`, use regular expresions. They are a nice way to match patterns! If you are not familiar with them, don't worry too much about how they work.)
+(Many string functions in Julia, including `split`, can take regular expresions. They are a nice way to match patterns! If you are not familiar with them, don't worry too much about how they work.)
 """
 
 # ╔═╡ d65a4a38-9b74-11ea-1b14-fb763c262d1e
@@ -89,7 +96,7 @@ There are $(length(words)) words in the book. Wow!
 md"""
 ## Counting
 
-We often care about how often words occur, so counting words is a useful tool. Let's define a function that will count a list of tokens. It will return a dictionary that gives the count for each word.
+Our text consists of $(length(words)) words, and many of them are duplicates: the same words will occur many times. To learn more about this, we would like to count word occurances. Let's define a function that will count a list of tokens. It will return a dictionary that gives the count for each word.
 """
 
 # ╔═╡ c1016a7a-9b78-11ea-2528-37c572305f75
@@ -482,7 +489,10 @@ end
 
 # ╔═╡ Cell order:
 # ╟─7d345408-9b72-11ea-0a6f-1f98a5606bcc
+# ╠═903378ce-f795-11ea-2c9c-ddf0a83327b8
 # ╠═72061fea-9b71-11ea-030c-41b037d39a84
+# ╠═bd672c80-f795-11ea-18d5-4f90843409b9
+# ╠═cebcb1ba-f795-11ea-15cd-c1e9d3c16722
 # ╟─07f26706-9b75-11ea-1595-136ad1d0978b
 # ╠═175ea342-9c26-11ea-1927-19f53874fef4
 # ╠═952e26b4-9b75-11ea-0711-977b90743ae3
