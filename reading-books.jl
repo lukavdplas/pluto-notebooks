@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.8
+# v0.11.14
 
 using Markdown
 using InteractiveUtils
@@ -27,7 +27,14 @@ emma = begin
 	lines = split(raw_text, r"\n")
 	relevant_lines = lines[32:end - 368]
 	join(relevant_lines, "\n")
-end
+end ;
+
+# ╔═╡ dced39c4-f8c5-11ea-3676-a110ad097051
+md"""The `;` at the end of the code block above hides the output, so we don't see the entire novel on our screen. To give you an idea of what the `emma` variable looks like, here is a sample:
+"""
+
+# ╔═╡ 9b6cfeee-f8c5-11ea-1e86-0d4e377bb7fd
+emma[1100:1300]
 
 # ╔═╡ 07f26706-9b75-11ea-1595-136ad1d0978b
 md"""
@@ -483,6 +490,8 @@ end
 # ╔═╡ Cell order:
 # ╟─7d345408-9b72-11ea-0a6f-1f98a5606bcc
 # ╠═72061fea-9b71-11ea-030c-41b037d39a84
+# ╟─dced39c4-f8c5-11ea-3676-a110ad097051
+# ╠═9b6cfeee-f8c5-11ea-1e86-0d4e377bb7fd
 # ╟─07f26706-9b75-11ea-1595-136ad1d0978b
 # ╠═175ea342-9c26-11ea-1927-19f53874fef4
 # ╠═952e26b4-9b75-11ea-0711-977b90743ae3
