@@ -28,13 +28,14 @@ emma = let
 	lines = split(raw_text, r"\n")
 	relevant_lines = lines[32:end - 368]
 	join(relevant_lines, "\n")
-end;
+end ;
 
-# ╔═╡ bd672c80-f795-11ea-18d5-4f90843409b9
-emma[1:500]
+# ╔═╡ dced39c4-f8c5-11ea-3676-a110ad097051
+md"""The `;` at the end of the code block above hides the output, so we don't see the entire novel on our screen. To give you an idea of what the `emma` variable looks like, here is a sample:
+"""
 
-# ╔═╡ cebcb1ba-f795-11ea-15cd-c1e9d3c16722
-Text(emma[1:500])
+# ╔═╡ 9b6cfeee-f8c5-11ea-1e86-0d4e377bb7fd
+emma[1100:1300]
 
 # ╔═╡ 07f26706-9b75-11ea-1595-136ad1d0978b
 md"""
@@ -491,8 +492,8 @@ end
 # ╟─7d345408-9b72-11ea-0a6f-1f98a5606bcc
 # ╠═903378ce-f795-11ea-2c9c-ddf0a83327b8
 # ╠═72061fea-9b71-11ea-030c-41b037d39a84
-# ╠═bd672c80-f795-11ea-18d5-4f90843409b9
-# ╠═cebcb1ba-f795-11ea-15cd-c1e9d3c16722
+# ╟─dced39c4-f8c5-11ea-3676-a110ad097051
+# ╠═9b6cfeee-f8c5-11ea-1e86-0d4e377bb7fd
 # ╟─07f26706-9b75-11ea-1595-136ad1d0978b
 # ╠═175ea342-9c26-11ea-1927-19f53874fef4
 # ╠═952e26b4-9b75-11ea-0711-977b90743ae3
