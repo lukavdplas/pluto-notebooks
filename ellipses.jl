@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.1
+# v0.12.3
 
 using Markdown
 using InteractiveUtils
@@ -20,13 +20,11 @@ using Plots
 md"""
 # The circumference of an ellipse
 
-_**Note:** pictures should be replaced with better versions_
-
 This notebook is inspired by [Matt Parker's video](https://youtu.be/5nW3nJhBHL0) on the same topic.
 
 You are (hopefully) familiar with the formula to calculate the circumference of a circle. If we have a circle with radius $r$...
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Circle-withsegments.svg/1024px-Circle-withsegments.svg.png)
+![](https://raw.githubusercontent.com/lukavdplas/pluto-notebooks/master/img/circle.png)
 
 ... then the circumference $C$ is equal to $2πr$.
 
@@ -36,7 +34,7 @@ Because an ellipse is elongated, we can't just describe it with a single value f
 
 (The _semi-_bit means that we go form the centre to the edge, not from one edge to the other. So $a$ and $b$ are analogous to the radius, not the diameter.)
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Ellipse_semi-major_and_minor_axes.svg/720px-Ellipse_semi-major_and_minor_axes.svg.png)
+![](https://raw.githubusercontent.com/lukavdplas/pluto-notebooks/master/img/ellipse.png)
 
 Let's start by making a structure for that.
 
@@ -80,20 +78,6 @@ md"""
 These values are really all we need to do some geometry. But it's probably nice to have some visualisation as well. Here is a picture of our ellipse:
 """
 
-# ╔═╡ 44ab1d7c-032c-11eb-0d82-bb23901148f3
-function show_ellipse(el::Ellipse)
-	angles = range(0, 4π, length=100)
-	limits = (- el.a, el.a) .* 1.05
-	plot(el.a .* sin.(angles), el.b .* cos.(angles), 	     #formula
-		xlim = limits, ylim = limits, size = (500, 500), #show a/b ratio correctly
-		lw =3, 											 #linewidth
-		legend = false, framestyle = :none 				 #hide axes and legend
-	)
-end
-
-# ╔═╡ b7d212b0-032c-11eb-235f-eb2f2b85292c
-show_ellipse(shape)
-
 # ╔═╡ b171c514-0949-11eb-01aa-1f7d5f3470ca
 md"""
 Now, let's go back to our question: how do we calculate the circumference of an ellipse?
@@ -111,7 +95,7 @@ Oof.
 
 Don't worry about understanding the formula. One thing of note: the formula contains an infinite sum (the $∞$ sign above the $\Sigma$). We can't actually repeat a calculation into infinity, but the more steps we make, the closer the result will be to the actual circumference. 
 
-This formula is a pain in the butt to encode in a Julia in the 21st century. (Don't worry, I already did that for you.) But it was even worse in History Times, when people did not have computers at their disposal. So instead, people would use approximation functions.
+This formula is a hassle to encode in a Julia in the 21st century. (Don't worry, I already did that for you.) But using a formula like that was even worse in History Times, when people did not have computers at their disposal. So instead, people would use approximation functions.
 
 An approximation function will give you something _close_ to the real circumference, but it's easier to calculate. That is what we will do in this notebook! We can encode some functions and compare them to the "true" value of the circumference.
 """
@@ -124,12 +108,12 @@ Let's define some approximation functions. A function should take an ellipse as 
 """
 
 # ╔═╡ 91f220c6-0953-11eb-0916-975e36ec27ca
-function πab(el::Ellipse)
+function π_a_plus_b(el::Ellipse)
 	π * (el.a + el.b)
 end
 
 # ╔═╡ 48531a3c-0954-11eb-1b36-0b4408fe7c6f
-πab(shape)
+π_a_plus_b(shape)
 
 # ╔═╡ 6841d7f8-04ba-11eb-0553-2d898d29bbc1
 md"""
@@ -155,7 +139,7 @@ end
 
 # ╔═╡ 67a6224e-04b3-11eb-3f32-c75b44d59920
 approximations = Dict(
-	"π(a + b)" => πab, 
+	"π(a + b)" => π_a_plus_b, 
 	"Ramanujan" => ramanujan, 
 	"Matt Parker" => parker)
 
@@ -207,8 +191,6 @@ where
 $h = \frac{(a - b)^2}{(a + b)^2}$
 
 As I mentioned, you can sum to a particular value of $n$ to get the level of precision that you want. I used $n = 10$.
-
-_**Note:** increasing the precision above 20 will start to cause problems with the `factorial` function. But at that point, increasing precision also no longer affects the float value of the outcome. If you wanted more precision, you would have to change the types to allow bigger numbers in the calculation, and more decimal points in the output type. This may be a good improvement to add._
 
 """
 
@@ -314,6 +296,23 @@ let
 	p
 end
 
+# ╔═╡ 0ff28cba-12e6-11eb-33c3-236317fcb1a6
+md"Lastly, here is the function I used to display the ellipse in the beginning."
+
+# ╔═╡ 44ab1d7c-032c-11eb-0d82-bb23901148f3
+function show_ellipse(el::Ellipse)
+	angles = range(0, 4π, length=100)
+	limits = (- el.a, el.a) .* 1.05
+	plot(el.a .* sin.(angles), el.b .* cos.(angles), 	 #formula
+		xlim = limits, ylim = limits, size = (500, 500), #show a/b ratio correctly
+		lw =3, 											 #linewidth
+		legend = false, framestyle = :none 				 #hide axes and legend
+	)
+end
+
+# ╔═╡ b7d212b0-032c-11eb-235f-eb2f2b85292c
+show_ellipse(shape)
+
 # ╔═╡ Cell order:
 # ╟─51f23aae-0946-11eb-1bab-93dcbc98f564
 # ╠═548569a6-032b-11eb-33cc-af77acc58e4c
@@ -323,8 +322,6 @@ end
 # ╠═46298274-0949-11eb-3c9b-654a1fb92cbe
 # ╠═496da6f4-0949-11eb-3e5c-73278ab92860
 # ╟─9c36f9cc-04b1-11eb-3174-0390e0e731a8
-# ╟─41038420-032c-11eb-3351-d3b98b982502
-# ╟─44ab1d7c-032c-11eb-0d82-bb23901148f3
 # ╠═b7d212b0-032c-11eb-235f-eb2f2b85292c
 # ╟─b171c514-0949-11eb-01aa-1f7d5f3470ca
 # ╟─68d34a1c-0953-11eb-1631-0db60515316e
@@ -355,3 +352,6 @@ end
 # ╠═fe5744c4-04b1-11eb-0631-1de63b183b3e
 # ╟─20a38854-0955-11eb-15d9-bd5c5cbc7165
 # ╠═adbc6a96-04b2-11eb-0102-578a46548aed
+# ╟─0ff28cba-12e6-11eb-33c3-236317fcb1a6
+# ╠═44ab1d7c-032c-11eb-0d82-bb23901148f3
+# ╟─41038420-032c-11eb-3351-d3b98b982502
